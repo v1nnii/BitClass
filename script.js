@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const firstNameField = document.getElementById("first-name");
   const lastNameField = document.getElementById("last-name");
 
-  const API_URL = "bitclass-production.up.railway.app";
+  const API_URL = "https://bitclass-production.up.railway.app";
 
   let isLogin = true;
 
