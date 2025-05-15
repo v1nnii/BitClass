@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Главная страница</title>
+
+  <!-- Шрифты -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet" />
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="/CSS/styles.css" />
+  <link rel="stylesheet" href="/CSS/pravo.css" />
+  <link rel="stylesheet" href="/CSS/osnova1.css" />
+  <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+
+
+  <!-- Встроенные стили -->
+  <style>
+    .dropdown-menu {
+      display: none;
+      list-style: none;
+      padding-left: 20px;
+    }
+    .dropdown-menu.show {
+      display: block;
+    }
+    .content-section {
+      display: none;
+    }
+    .content-section.active {
+      display: block;
+    }
+    .dropdown-toggle {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Боковое меню -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="/assets/image/book-icon.png" alt="Логотип" />
+      </div>
+      <nav class="menu">
+        <a href="#home" class="menu-item" data-section="home">
+          <img src="/assets/icons/home.svg" alt="Главная" /> Главная
+        </a>
+        <div class="menu-item dropdown-toggle">
+          <img src="/assets/icons/class.svg" alt="Класс" /> Класс
+          <span class="arrow">&#9662;</span>
+        </div>
+        <ul class="dropdown-menu">
+          <li><a href="#class5" class="class-link" data-section="class5">5 Класс</a></li>
+          <li><a href="#class6" class="class-link" data-section="class6">6 Класс</a></li>
+          <li><a href="#class7" class="class-link" data-section="class7">7 Класс</a></li>
+          <li><a href="#class8" class="class-link" data-section="class8">8 Класс</a></li>
+          <li><a href="#class9" class="class-link" data-section="class9">9 Класс</a></li>
+          <li><a href="#class10" class="class-link" data-section="class10">10 Класс</a></li>
+          <li><a href="#class11" class="class-link" data-section="class11">11 Класс</a></li>
+        </ul>
+        <a href="#feed" class="menu-item" data-section="feed">
+          <img src="/assets/icons/feed.svg" alt="Лента" /> Лента
+        </a>
+        <a href="#games" class="menu-item" data-section="games">
+          <img src="/assets/icons/Icon.svg" alt="Игры" /> Игры
+        </a>
+        
+      </nav>
+      <a href="index.html" class="logout">
+        <img src="/assets/icons/exit.svg" alt="Выход" /> Выйти
+      </a>
+    </aside>
+
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <section id="home" class="content-section active">
+                <section class="banner">
+                    <div class="banner-text">
+                        <h1>Учись. Решай. Успевай</h1>
+                        <button>Смотреть</button>
+                    </div>
+                    <div class="banner-image">
+                        <img src="/assets/image/banner-image.png" alt="Баннер">
+                    </div>
+                </section>
+            </section>
+
+            <section id="collections" class="content-section"><h1>Учится</h1></section>
+            <section id="bookmark" class="content-section"><h1>Чат</h1></section>
+            <section id="exchange" class="content-section"><h1>Педагог</h1></section>
+            
+            <!-- Разделы классов -->
+            <section id="class5" class="content-section"><h1>5 Класс</h1></section>
+            <section id="class6" class="content-section"><h1>6 Класс</h1></section>
+            
+            <section id="class7" class="content-section active">
+                <h2 class="class-title">7 Класс</h2>
+              
+                <div class="chapter">
+                  <h3 class="chapter-title">1 Введение в информатику</h3>
+                  <div class="topics-column">
+                    <a href="tema.html?slug=class7-topic1" class="topic-item topic-bubble" data-slug="class7-topic1">● Компьютеры и программы</a>
+                    <a href="tema.html?slug=class7-topic2" class="topic-item topic-bubble" data-slug="class7-topic2">● Данные в компьютере</a>
+                    <a href="tema.html?slug=class7-topic3" class="topic-item topic-bubble" data-slug="class7-topic3">● Как управлять компьютером</a>
+                    <a href="tema.html?slug=class7-topic4" class="topic-item topic-bubble" data-slug="class7-topic4">● Интернет</a>
+                  </div>
+                  
+                </div>
+              
+                <div class="chapter">
+                  <h3 class="chapter-title">2 Компьютер</h3>
+                  <div class="topics-column">
+                    <a href="tema.html?slug=class7-topic5" class="topic-item">● Процессор и память</a>
+                    <a href="tema.html?slug=class7-topic6" class="topic-item">● Устройства ввода и вывода</a>
+                  </div>
+                </div>
+              </section>
+              
+            
+            <!-- Удалены дублирующие статичные страницы тем -->
+            <section id="class8" class="content-section"><h1>8 Класс</h1></section>
+            <section id="class9" class="content-section"><h1>9 Класс</h1></section>
+            <section id="class10" class="content-section"><h1>10 Класс</h1></section>
+            <section id="class11" class="content-section"><h1>11 Класс</h1></section>
+            <!-- Лента -->
+            <section id="feed" class="content-section">
+              <h2 class="section-title">Лента</h2>
+              <button id="addMaterialBtn">Добавить материал</button>
+              <div id="controls" class="feed-controls">
+                <input type="text" id="searchInput" placeholder="Поиск...">
+                <select id="sortSelect">
+                  <option value="newest">Сначала новые</option>
+                  <option value="oldest">Сначала старые</option>
+                </select>
+              </div>
+              <!-- Модальное окно -->
+              <div id="modal" class="modal hidden">
+                <div class="modal-content">
+                  <span class="close-btn">&times;</span>
+                  <h3>Добавить материал</h3>
+                  <form id="materialForm" enctype="multipart/form-data">
+                    <input type="text" name="title" placeholder="Заголовок" required />
+
+                    
+                    <textarea name="content" placeholder="Текст или ссылка на видео" required></textarea>
+                    
+                    <select name="type" required>
+                      <option value="text">Текст</option>
+                      <option value="video">Видео</option>
+                      <option value="doc">Документ (Word)</option>
+                    </select>
+                    
+                    <input type="file" name="file" id="fileInput" class="hidden" />
+                    <button type="submit">Сохранить</button>
+                  </form>
+                  
+                </div>
+              </div>
+
+              <div class="feed-container" id="feedContainer"></div>
+            </section>
+            <section id="games" class="content-section">
+              <h2 class="section-title">Обучающие игры</h2>
+              <div class="game-grid">
+                <div class="game-card">
+                  <h3>Тайпинг-гонка</h3>
+                  <p>Прокачай слепую печать, вводя IT-тексты под таймер.</p>
+                  <a href="typing-race.html" class="play-button">Играть</a>
+                </div>
+                <div class="game-card">
+                  <h3>Собери компьютер</h3>
+                  <p>Расположи комплектующие в правильном порядке.</p>
+                  <a href="build-pc.html" class="play-button">Играть</a>
+                </div>
+                <div class="game-card">
+                  <h3>Викторина по информатике</h3>
+                  <p>Ответь на вопросы и проверь свои знания.</p>
+                  <a href="quiz-game.html" class="play-button">Играть</a>
+                </div>
+              </div>
+            </section>
+            
+
+            
+  
+        </main>
+
+        <!-- Правая колонка -->
+        <aside class="right-sidebar">
+            <div class="user-profile">
+                <span class="user-name">Загрузка...</span>
+            </div>
+            <div class="performance-widget">
+                <div class="widget-header">
+                    <span>Прогресс</span>
+                    <span class="xp-total">0 XP</span>
+                </div>
+                <div class="daily-label">Дневной прогресс</div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-text">0/0 XP</div>
+                  <template>
+                </div>
+                <div class="chart">
+                    <div class="y-axis">
+                        <span>80</span><span>60</span><span>40</span><span>20</span><span>0</span>
+                    </div>
+                    <div class="graph">
+                        <svg viewBox="0 0 240 140">
+                            <!-- Сетки -->
+                            <line x1="0" y1="0" x2="240" y2="0" class="grid-line"/>
+                            <line x1="0" y1="35" x2="240" y2="35" class="grid-line"/>
+                            <line x1="0" y1="70" x2="240" y2="70" class="grid-line"/>
+                            <line x1="0" y1="105" x2="240" y2="105" class="grid-line"/>
+                            <line x1="0" y1="140" x2="240" y2="140" class="grid-line"/>
+                            <!-- График -->
+                            <polyline 
+                                points="0,140 40,140 80,140 120,140 160,140 200,140 240,70" 
+                                fill="rgba(217, 83, 79, 0.1)" 
+                                stroke="#D9534F" 
+                                stroke-width="2" />
+                            <!-- Точки -->
+                            <circle cx="0" cy="140" r="4" fill="#fff" stroke="#D9534F" stroke-width="2"/>
+                            <circle cx="40" cy="140" r="4" fill="#fff" stroke="#D9534F" stroke-width="2"/>
+                            <circle cx="80" cy="140" r="4" fill="#fff" stroke="#D9534F" stroke-width="2"/>
+                            <circle cx="120" cy="140" r="4" fill="#fff" stroke="#D9534F" stroke-width="2"/>
+                            <circle cx="160" cy="140" r="4" fill="#fff" stroke="#D9534F" stroke-width="2"/>
+                            <circle cx="200" cy="140" r="4" fill="#fff" stroke="#D9534F" stroke-width="2"/>
+                            <circle cx="240" cy="70" r="4" fill="#fff" stroke="#D9534F" stroke-width="2"/>
+                        </svg>
+                        <div class="weekdays">
+                            <span>П</span><span>В</span><span>С</span><span>Ч</span><span>П</span><span>С</span><span>В</span>
+                        </div>
+                    </div>
+                    </template>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="main.js"></script>
+    <script src="user.js"></script>
+    <script src="feed.js"></script>
+</body>
+</html>

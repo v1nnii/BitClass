@@ -1,0 +1,131 @@
+ /* Правая колонка */
+ .right-sidebar {
+    background-color: #f9f9f9;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .user-profile {
+    display: flex;
+    align-items: center; 
+    height: 48px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 6px 10px;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.user-photo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-left: 4px;
+}
+
+.user-name {
+    font-family: 'Proxima Nova', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-left: 8px;
+}
+
+/* Новый контейнер для текста */
+.user-name-container {
+    display: flex;
+    justify-content: center; 
+    flex-grow: 1; 
+    text-align: center; 
+}
+  collection-section
+  .profile-arrow {
+    width: 20px;
+    height: 13px;
+    margin-right: 4px;
+  }
+  
+  .performance-widget {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 400px;
+    margin: auto;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .widget-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .daily-label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .progress-bar-wrapper {
+    margin-bottom: 20px;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    background: #eee;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #218838);
+    width: 0%;
+    transition: width 1.2s ease-in-out;
+  }
+  
+  .progress-text {
+    text-align: right;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .chart {
+    margin-top: 20px;
+  }
+  
+  .y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 140px;
+    float: left;
+    margin-right: 10px;
+    font-size: 12px;
+    color: #aaa;
+  }
+  
+  .graph {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .grid-line {
+    stroke: #ddd;
+    stroke-width: 1;
+  }
+  
+  .weekdays {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  

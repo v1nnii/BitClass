@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Компьютеры и программы</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../CSS/tema.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="loadMarkdown.js"></script>
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <div class="page-container">
+    <img src="/assets/image/book-icon2.png" alt="Эмблема" class="logo" />
+
+    <div class="orange-container">
+      <div class="white-container">
+
+        <!-- Прогресс -->
+        <div class="progress-bar" id="progress-bar"></div>
+
+        <!-- Вступление -->
+        <div id="section-intro">
+          <div class="text-box">Загрузка темы...</div>
+          <button class="next-button" id="to-quiz">Далее</button>
+        </div>
+
+        <!-- Вопросы -->
+        <div id="section-quiz" style="display: none; margin-top: 80px;">
+          <p id="question-text"></p>
+          <div id="answers-container"></div>
+          <button class="next-button" id="next-question">Следующий вопрос</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

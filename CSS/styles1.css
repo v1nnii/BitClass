@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Блок для изображения */
+.image-box {
+    flex: 1;
+    background-color: #b83b3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.image-box img {
+    max-width: 80%;
+    height: auto;
+}
+
+/* Блок для формы */
+.form-box {
+    flex: 1;
+    padding: 40px;
+    width: 100%;
+    height: 450px; /* Фиксированная высота для всей формы */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-header {
+    margin-bottom: 20px;
+}
+
+.form-header h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#switch-link {
+    color: #e53935;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Отступ между элементами формы */
+}
+
+#auth-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+#first-name {
+    margin-bottom: 10px; 
+}
+
+.show-password-container {
+    display: flex;
+    align-items: center;
+    gap: 2px; 
+    margin: 10px 0;
+}
+
+.show-password-container input[type="checkbox"] {
+    transform: scale(0.8); 
+    cursor: pointer;
+    margin: 0; 
+    padding: 0;
+}
+
+.show-password-container label {
+    font-size: 14px;
+    color: #555;
+    cursor: default; /* Исключаем текст из клика */
+    white-space: nowrap;
+}
+
+#auth-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#auth-form button:hover {
+    background-color: #333;
+}
+
+/* Поля, которые будут скрыты при входе */
+.hidden-field {
+    display: none;
+}
+
+/* Медиазапрос для мобильных устройств */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .image-box, .form-box {
+        flex: none;
+        width: 100%;
+        padding: 20px;
+    }
+    .form-box {
+        height: auto;
+    }
+}

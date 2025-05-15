@@ -1,0 +1,277 @@
+/* Глобальные стили и сброс */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #ffffff;
+}
+
+/* Основной контейнер */
+.page-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+}
+
+/* Логотип */
+.logo {
+  width: 78px;
+  height: 78px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+/* Оранжевый блок */
+.orange-container {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  min-height: 600px;
+  background-color: #C74827;
+  border-radius: 15px;
+  margin: 60px auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Белый блок */
+.white-container {
+  width: 100%;
+  max-width: 1125px;
+  min-height: 519px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  position: relative;
+  padding: 20px;
+}
+
+/* Прогресс-бар */
+.progress-bar {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.progress-square {
+  width: 31px;
+  height: 31px;
+  background-color: #D9D9D9;
+  border-radius: 5px;
+}
+
+.progress-square.done {
+  background-color: #69D473;
+}
+
+.progress-square.wrong {
+  background-color: #C74827;
+}
+
+/* Текстовый блок */
+.text-box {
+  width: 100%;
+  max-width: 1066px;
+  height: 335px;
+  border: 3px solid #C74827;
+  border-radius: 5px;
+  margin: 80px auto 0 auto;
+  padding: 20px;
+  font-size: 18px;
+  line-height: 1.5;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Вопрос */
+#question-text {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 90px;
+}
+
+/* Ответы */
+#answers-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px 70px;
+  justify-content: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.answer-button {
+  padding: 15px 10px;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  border: 2px solid #C74827;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.answer-button:hover {
+  background-color: #ffe6e1;
+  transform: scale(1.02);
+}
+
+.answer-button.correct {
+  background-color: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.answer-button.wrong {
+  background-color: #f44336;
+  color: white;
+  border-color: #f44336;
+}
+
+/* Кнопка "Далее" */
+.next-button {
+  padding: 12px 24px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #69D473;
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease;
+  min-width: 160px;
+  text-align: center;
+}
+
+.next-button:hover {
+  background-color: #57bd63;
+}
+
+/* Расположение кнопки "Далее" в контейнере */
+.white-container .next-button {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+/* Стиль результата */
+.result-container {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Заголовок результата */
+.result-container h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.result-container p {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+/* Старый блок кнопок (центр) */
+.result-buttons {
+  display: none; /* скрыт, если не нужен */
+}
+
+/* Новый блок кнопок по углам */
+.result-buttons-corner {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  margin-top: 50px;
+}
+
+/* Кнопка "Пройти снова" (слева) */
+.restart-button {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 12px 24px;
+  font-size: 1em;
+  border-radius: 8px;
+  background-color: #f57c00;
+  border: none;
+  color: white;
+  cursor: pointer;
+  min-width: 160px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.restart-button:hover {
+  background-color: #e64a19;
+  transform: scale(1.02);
+}
+
+/* Кнопка "На главную" (справа) */
+.finish-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 12px 24px;
+  font-size: 1em;
+  border-radius: 8px;
+  background-color: #e64a19;
+  border: none;
+  color: white;
+  cursor: pointer;
+  min-width: 160px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.finish-button:hover {
+  background-color: #C74827;
+  transform: scale(1.02);
+}
+
+/* Адаптивность: мобильные устройства */
+@media (max-width: 768px) {
+  .orange-container,
+  .white-container,
+  .text-box {
+    width: 100%;
+    height: auto;
+  }
+
+  #answers-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  #question-text {
+    font-size: 20px;
+    margin-bottom: 50px;
+  }
+
+  .result-buttons-corner {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .restart-button,
+  .finish-button {
+    position: static;
+    margin: 10px auto;
+    display: block;
+  }
+}

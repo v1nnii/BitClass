@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Тайпинг-гонка</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #ffffff;
+    }
+
+    .page-container {
+      width: 100vw;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 78px;
+      height: 78px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .orange-container {
+      width: 100%;
+      max-width: 1200px;
+      min-height: 600px;
+      background-color: #C74827;
+      border-radius: 15px;
+      margin: 60px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .white-container {
+      width: 100%;
+      max-width: 1125px;
+      min-height: 519px;
+      background-color: #FFFFFF;
+      border-radius: 15px;
+      position: relative;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: #c7432b;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #timeBarContainer {
+      height: 8px;
+      background: #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    #timeBar {
+      height: 100%;
+      width: 100%;
+      background: red;
+      transition: width 0.1s;
+    }
+
+    #displayText {
+      font-size: 1.3em;
+      line-height: 1.8;
+      background: #f0f0f0;
+      padding: 120px 35px;
+      border-radius: 12px;
+      min-height: 120px;
+      margin-bottom: 15px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      white-space: pre-wrap; 
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .wrong {
+      color: red;
+      text-decoration: underline;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    #userInput {
+      flex-grow: 1;
+      padding: 14px;
+      font-size: 1.1em;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    #restartBtn {
+      padding: 12px 20px;
+      font-size: 1em;
+      background-color: #c7432b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #restartBtn:hover {
+      background-color: #a63423;
+    }
+    .modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+
+  </style>
+</head>
+<body>
+  <!-- Логотип вне блоков -->
+  <img src="/assets/image/book-icon2.png" alt="Логотип" class="logo" id="logo" style="cursor:pointer;" />
+
+  <div class="page-container">
+    <div class="orange-container">
+      <div class="white-container">
+        <div class="header">
+          <h1>Тайпинг-гонка</h1>
+        </div>
+
+        <div class="stats">
+          <div>
+            ✅ Точность: <span id="accuracyDisplay">–</span><br>
+            🎯 Слов в минуту: <span id="wpmDisplay">–</span>
+          </div>
+          <div>
+            🏆 Ваш рекорд: <span id="recordValue">–</span><br>
+            🎯 Очки: <span id="scoreDisplay">0</span>
+          </div>
+        </div>
+
+        <div id="timeBarContainer">
+          <div id="timeBar"></div>
+        </div>
+
+        <div id="displayText">Загрузка текста...</div>
+
+        <div class="input-row">
+          <input type="text" id="userInput" disabled placeholder="Начните вводить текст..." />
+          <button id="restartBtn">Начать заново</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Модальное окно окончания игры -->
+<div id="gameOverModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>🎮 Игра окончена</h2>
+    <p>Точность: <span id="modalAccuracy">–</span></p>
+    <p>Слов в минуту (WPM): <span id="modalWPM">–</span></p>
+    <p>Очки: <span id="modalScore">0</span></p>
+    <div class="modal-buttons">
+      <button onclick="handleRestart()">🔁 Начать заново</button>
+      <button onclick="goToMain()">🚪 Выйти</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <script src="typing-race.js"></script>
+</body>
+</html>
