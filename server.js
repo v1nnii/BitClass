@@ -749,5 +749,5 @@ app.get("/api/typing-race/score", async (req, res) => {
 
 // Запуск сервера
 app.listen(3000, () => {
-    console.log("Сервер запущен на http://localhost:3000");
+    console.log("Сервер запущен на bitclass-production.up.railway.app");
 });
