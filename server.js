@@ -13,11 +13,10 @@ require("dotenv").config();
 
 
 const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "my_data_base",
-    password: "6974",
-    port: 5432,
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 const app = express();
