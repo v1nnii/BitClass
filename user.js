@@ -22,7 +22,7 @@ async function fetchUserData() {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3000/api/users', {
+        const response = await fetch('bitclass-production.up.railway.app/api/users', {
             headers: { Authorization: `Bearer ${token}` }
         });
         if (response.ok) {
