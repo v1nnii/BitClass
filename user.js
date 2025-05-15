@@ -22,7 +22,7 @@ async function fetchUserData() {
         return;
     }
     try {
-        const response = await fetch('bitclass-production.up.railway.app/api/users', {
+        const response = await fetch('https://bitclass-production.up.railway.app/api/users', {
             headers: { Authorization: `Bearer ${token}` }
         });
         if (response.ok) {
