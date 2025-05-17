@@ -1,68 +1,85 @@
-let currentDecimal = 0;
-let currentSystem = 'binary';
+let currentNumber, targetBase;
 let score = 0;
 let timeLeft = 30;
-let timer;
+let timerInterval;
 
-const decimalNumberSpan = document.getElementById("decimalNumber");
-const targetSystemSpan = document.getElementById("targetSystem");
-const timeLeftSpan = document.getElementById("timeLeft");
-const scoreSpan = document.getElementById("score");
-const feedback = document.getElementById("feedback");
+function generateTask() {
+  currentNumber = Math.floor(Math.random() * 256) + 1;
+  targetBase = Math.random() < 0.5 ? 2 : 16;
+  document.getElementById("decimalNumber").textContent = currentNumber;
+  document.getElementById("targetSystem").textContent = targetBase === 2 ? "двоичную (2)" : "шестнадцатеричную (16)";
+  document.getElementById("userAnswer").value = "";
+  document.getElementById("feedback").textContent = "";
+  generateHintSteps();
+}
 
-function startGame() {
-  score = 0;
-  timeLeft = 30;
-  scoreSpan.textContent = score;
-  timeLeftSpan.textContent = timeLeft;
-  nextQuestion();
-  clearInterval(timer);
-  timer = setInterval(() => {
+function submitAnswer() {
+  const userAnswer = document.getElementById("userAnswer").value.trim().toLowerCase();
+  const correctAnswer = currentNumber.toString(targetBase);
+
+  if (userAnswer === correctAnswer) {
+    score++;
+    document.getElementById("score").textContent = score;
+    document.getElementById("feedback").textContent = "✅ Верно!";
+    generateTask();
+  } else {
+    document.getElementById("feedback").textContent = "❌ Неверно. Попробуйте ещё.";
+  }
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
     timeLeft--;
-    timeLeftSpan.textContent = timeLeft;
+    document.getElementById("timeLeft").textContent = timeLeft;
     if (timeLeft <= 0) {
-      clearInterval(timer);
-      endGame();
+      clearInterval(timerInterval);
+      document.getElementById("feedback").textContent = `⏱️ Время вышло! Итог: ${score} правильных ответов.`;
+      document.getElementById("userAnswer").disabled = true;
     }
   }, 1000);
 }
 
-function nextQuestion() {
-  currentDecimal = Math.floor(Math.random() * 31);
-  currentSystem = Math.random() > 0.5 ? 'binary' : 'hex';
-
-  decimalNumberSpan.textContent = currentDecimal;
-  targetSystemSpan.textContent = currentSystem === 'binary' ? 'двоичную' : 'шестнадцатеричную';
-  document.getElementById("userAnswer").value = '';
-  feedback.textContent = '';
+function showHint() {
+  document.getElementById("hintModal").style.display = "flex";
 }
 
-function submitAnswer() {
-  const userInput = document.getElementById("userAnswer").value.trim().toLowerCase();
-  let correctAnswer = '';
-  if (currentSystem === 'binary') {
-    correctAnswer = currentDecimal.toString(2);
-  } else {
-    correctAnswer = currentDecimal.toString(16);
+function closeHint() {
+  document.getElementById("hintModal").style.display = "none";
+}
+
+function generateHintSteps() {
+  const stepsContainer = document.getElementById("hintSteps");
+  stepsContainer.innerHTML = "";
+
+  let num = currentNumber;
+  let steps = [];
+
+  if (targetBase === 2) {
+    while (num > 0) {
+      const step = `${num} / 2 = ${Math.floor(num / 2)}, остаток ${num % 2}`;
+      steps.unshift(step);
+      num = Math.floor(num / 2);
+    }
+  } else if (targetBase === 16) {
+    while (num > 0) {
+      const rem = num % 16;
+      const hex = rem.toString(16).toUpperCase();
+      const step = `${num} / 16 = ${Math.floor(num / 16)}, остаток ${rem} (${hex})`;
+      steps.unshift(step);
+      num = Math.floor(num / 16);
+    }
   }
-  if (userInput === correctAnswer) {
-    score++;
-    scoreSpan.textContent = score;
-    feedback.style.color = 'green';
-    feedback.textContent = 'Верно!';
-  } else {
-    feedback.style.color = 'red';
-    feedback.textContent = `Неверно. Правильный ответ: ${correctAnswer}`;
-  }
-  nextQuestion();
+
+  steps.forEach(s => {
+    const p = document.createElement("p");
+    p.className = "hint-step";
+    p.textContent = s;
+    stepsContainer.appendChild(p);
+  });
 }
 
-function endGame() {
-  feedback.textContent = `⏰ Время вышло! Ваш счёт: ${score}`;
-  feedback.style.color = '#000';
-  document.getElementById("decimalNumber").textContent = '–';
-  document.getElementById("targetSystem").textContent = '–';
-}
-
-// Автоматический запуск игры при загрузке
-window.onload = startGame;
+// Инициализация
+window.onload = function() {
+  generateTask();
+  startTimer();
+};
