@@ -1,85 +1,89 @@
-let currentNumber, targetBase;
-let score = 0;
-let timeLeft = 30;
-let timerInterval;
+let decimalNumber, targetSystem, score = 0, timeLeft = 30, timer;
+const bases = [2, 16];
 
-function generateTask() {
-  currentNumber = Math.floor(Math.random() * 256) + 1;
-  targetBase = Math.random() < 0.5 ? 2 : 16;
-  document.getElementById("decimalNumber").textContent = currentNumber;
-  document.getElementById("targetSystem").textContent = targetBase === 2 ? "двоичную (2)" : "шестнадцатеричную (16)";
+function startGame() {
+  decimalNumber = Math.floor(Math.random() * 256);
+  targetSystem = bases[Math.floor(Math.random() * bases.length)];
+  document.getElementById("decimalNumber").textContent = decimalNumber;
+  document.getElementById("targetSystem").textContent =
+    targetSystem === 2 ? "двоичную (2)" : "шестнадцатеричную (16)";
   document.getElementById("userAnswer").value = "";
   document.getElementById("feedback").textContent = "";
-  generateHintSteps();
-}
+  timeLeft = 30;
+  document.getElementById("timeLeft").textContent = timeLeft;
 
-function submitAnswer() {
-  const userAnswer = document.getElementById("userAnswer").value.trim().toLowerCase();
-  const correctAnswer = currentNumber.toString(targetBase);
-
-  if (userAnswer === correctAnswer) {
-    score++;
-    document.getElementById("score").textContent = score;
-    document.getElementById("feedback").textContent = "✅ Верно!";
-    generateTask();
-  } else {
-    document.getElementById("feedback").textContent = "❌ Неверно. Попробуйте ещё.";
-  }
-}
-
-function startTimer() {
-  timerInterval = setInterval(() => {
+  clearInterval(timer);
+  timer = setInterval(() => {
     timeLeft--;
     document.getElementById("timeLeft").textContent = timeLeft;
     if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      document.getElementById("feedback").textContent = `⏱️ Время вышло! Итог: ${score} правильных ответов.`;
-      document.getElementById("userAnswer").disabled = true;
+      clearInterval(timer);
+      alert("⏰ Время вышло!");
+      startGame();
     }
   }, 1000);
 }
 
-function showHint() {
-  document.getElementById("hintModal").style.display = "flex";
+function submitAnswer() {
+  const userAnswer = document.getElementById("userAnswer").value.trim().toLowerCase();
+  const correctAnswer = decimalNumber.toString(targetSystem);
+  if (userAnswer === correctAnswer) {
+    score++;
+    document.getElementById("score").textContent = score;
+    document.getElementById("feedback").textContent = "✅ Верно!";
+    startGame();
+  } else {
+    document.getElementById("feedback").textContent = "❌ Неверно. Попробуйте снова.";
+  }
+}
+
+// Подсказка — шаги
+let hintValue = 0;
+let hintSteps = [];
+
+function openHint() {
+  hintValue = decimalNumber;
+  hintSteps = [];
+  document.getElementById("currentStepValue").textContent = hintValue;
+  document.getElementById("quotientInput").value = "";
+  document.getElementById("remainderInput").value = "";
+  document.getElementById("hintFeedback").textContent = "";
+  document.getElementById("hintModal").style.display = "block";
 }
 
 function closeHint() {
   document.getElementById("hintModal").style.display = "none";
 }
 
-function generateHintSteps() {
-  const stepsContainer = document.getElementById("hintSteps");
-  stepsContainer.innerHTML = "";
+function submitHintStep() {
+  const q = parseInt(document.getElementById("quotientInput").value);
+  const r = parseInt(document.getElementById("remainderInput").value);
+  const expectedR = hintValue % 2;
+  const expectedQ = Math.floor(hintValue / 2);
 
-  let num = currentNumber;
-  let steps = [];
-
-  if (targetBase === 2) {
-    while (num > 0) {
-      const step = `${num} / 2 = ${Math.floor(num / 2)}, остаток ${num % 2}`;
-      steps.unshift(step);
-      num = Math.floor(num / 2);
+  if (r === expectedR && q === expectedQ) {
+    hintSteps.push(r);
+    hintValue = q;
+    document.getElementById("hintFeedback").textContent = "✅ Верно!";
+    if (hintValue === 0) {
+      const correctBinary = hintSteps.reverse().join("");
+      setTimeout(() => {
+        const userFinal = prompt(`Введите полученное двоичное число из остатков:\n(${hintSteps.reverse().join(" ")})`);
+        if (userFinal === correctBinary) {
+          alert("✅ Молодец! Это правильный ответ.");
+        } else {
+          alert(`❌ Неверно. Правильный ответ: ${correctBinary}`);
+        }
+        closeHint();
+      }, 500);
+    } else {
+      document.getElementById("quotientInput").value = "";
+      document.getElementById("remainderInput").value = "";
+      document.getElementById("currentStepValue").textContent = hintValue;
     }
-  } else if (targetBase === 16) {
-    while (num > 0) {
-      const rem = num % 16;
-      const hex = rem.toString(16).toUpperCase();
-      const step = `${num} / 16 = ${Math.floor(num / 16)}, остаток ${rem} (${hex})`;
-      steps.unshift(step);
-      num = Math.floor(num / 16);
-    }
+  } else {
+    document.getElementById("hintFeedback").textContent = "❌ Неправильно. Попробуйте ещё раз.";
   }
-
-  steps.forEach(s => {
-    const p = document.createElement("p");
-    p.className = "hint-step";
-    p.textContent = s;
-    stepsContainer.appendChild(p);
-  });
 }
 
-// Инициализация
-window.onload = function() {
-  generateTask();
-  startTimer();
-};
+startGame();
