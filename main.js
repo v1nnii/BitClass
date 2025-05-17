@@ -14,13 +14,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             target.classList.add('active');
         }
     }
+async function getDailyProgress() {
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.warn("Нет токена авторизации");
+            return 0;
+        }
 
-    // Получить дневной прогресс из localStorage
-    function getDailyProgress() {
-        const today = new Date().toISOString().slice(0, 10);
-        const data = JSON.parse(localStorage.getItem("dailyProgress")) || {};
-        return data.date === today ? data.score : 0;
+        const response = await fetch('/api/progress/daily', {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data.score || 0;
+        } else {
+            console.error("Ошибка получения дневного прогресса:", response.status);
+            return 0;
+        }
+    } catch (err) {
+        console.error("Ошибка при загрузке дневного прогресса:", err);
+        return 0;
     }
+}
 
     // Обновить и сохранить дневной прогресс
     function updateDailyProgress(newPoints) {
@@ -36,35 +55,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         return updated;
     }
-
-    // Получить и отобразить прогресс
-    async function loadTotalProgress() {
-        try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                console.warn("Нет токена для авторизации");
-                return;
-            }
-
-            const response = await fetch(`/api/progress/total`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Общий прогресс получен:", data);
-
-                const dailyScore = getDailyProgress();
-                updateProgressWidget(data.total_score, dailyScore);
-            } else {
-                console.error("Ошибка при получении общего прогресса:", response.status);
-            }
-        } catch (err) {
-            console.error("Ошибка при получении общего прогресса:", err);
+async function loadTotalProgress() {
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.warn("Нет токена для авторизации");
+            return;
         }
+
+        const response = await fetch(`/api/progress/total`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Общий прогресс получен:", data);
+
+            const dailyScore = await getDailyProgress();  // <-- добавлено "await"
+            updateProgressWidget(data.total_score, dailyScore);
+        } else {
+            console.error("Ошибка при получении общего прогресса:", response.status);
+        }
+    } catch (err) {
+        console.error("Ошибка при получении общего прогресса:", err);
     }
+}
+
 
     // Отображение прогресса
     function updateProgressWidget(totalScore, dailyScore) {
