@@ -28,7 +28,7 @@ function startGame() {
 }
 
 function nextQuestion() {
-  currentDecimal = Math.floor(Math.random() * 256);
+  currentDecimal = Math.floor(Math.random() * 31);
   currentSystem = Math.random() > 0.5 ? 'binary' : 'hex';
 
   decimalNumberSpan.textContent = currentDecimal;
