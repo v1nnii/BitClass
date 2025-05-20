@@ -9,19 +9,7 @@ function startGame() {
     targetSystem === 2 ? "двоичную (2)" : "шестнадцатеричную (16)";
   document.getElementById("userAnswer").value = "";
   document.getElementById("feedback").textContent = "";
-  timeLeft = 30;
-  document.getElementById("timeLeft").textContent = timeLeft;
 
-  clearInterval(timer);
-  timer = setInterval(() => {
-    timeLeft--;
-    document.getElementById("timeLeft").textContent = timeLeft;
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      alert("⏰ Время вышло!");
-      startGame();
-    }
-  }, 1000);
 }
 
 function submitAnswer() {
@@ -49,30 +37,39 @@ function openHint() {
   document.getElementById("remainderInput").value = "";
   document.getElementById("hintFeedback").textContent = "";
   document.getElementById("hintModal").style.display = "block";
+
+  const baseText = targetSystem === 2 ? "2 (двоичную)" : "16 (шестнадцатеричную)";
+  document.querySelector(".modal-content p:nth-of-type(2)").innerHTML =
+    `Введите <strong>частное</strong> и <strong>остаток</strong> от деления на ${baseText}:`;
 }
+
 
 function closeHint() {
   document.getElementById("hintModal").style.display = "none";
 }
-
 function submitHintStep() {
   const q = parseInt(document.getElementById("quotientInput").value);
-  const r = parseInt(document.getElementById("remainderInput").value);
-  const expectedR = hintValue % 2;
-  const expectedQ = Math.floor(hintValue / 2);
+  const r = document.getElementById("remainderInput").value.trim().toLowerCase();
 
-  if (r === expectedR && q === expectedQ) {
-    hintSteps.push(r);
+  const base = targetSystem;
+  const expectedR = hintValue % base;
+  const expectedQ = Math.floor(hintValue / base);
+
+  // Ожидаемый остаток как символ
+  const expectedRStr = expectedR.toString(base);
+
+  if (r === expectedRStr && q === expectedQ) {
+    hintSteps.push(expectedRStr);
     hintValue = q;
     document.getElementById("hintFeedback").textContent = "✅ Верно!";
     if (hintValue === 0) {
-      const correctBinary = hintSteps.reverse().join("");
+      const correctAnswer = hintSteps.reverse().join("");
       setTimeout(() => {
-        const userFinal = prompt(`Введите полученное двоичное число из остатков:\n(${hintSteps.reverse().join(" ")})`);
-        if (userFinal === correctBinary) {
+        const userFinal = prompt(`Введите полученное число в системе счисления ${base}:\n(${hintSteps.reverse().join(" ")})`);
+        if (userFinal === correctAnswer) {
           alert("✅ Молодец! Это правильный ответ.");
         } else {
-          alert(`❌ Неверно. Правильный ответ: ${correctBinary}`);
+          alert(`❌ Неверно. Правильный ответ: ${correctAnswer}`);
         }
         closeHint();
       }, 500);
