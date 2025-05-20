@@ -101,13 +101,13 @@ function submitFinalAnswer() {
 
   if (userAnswer === correctAnswer) {
     document.getElementById("finalFeedback").innerHTML = "✅ Правильно!";
-    document.getElementById("userAnswer").value = userAnswer;
-    closeHint();
-    submitAnswer();
+    document.getElementById("userAnswer").value = userAnswer; 
+    closeHint(); 
   } else {
     document.getElementById("finalFeedback").innerHTML = `❌ Неверно. Попробуйте ещё раз.`;
   }
 }
+
 
 function closeHint() {
   document.getElementById("hintModal").style.display = "none";
