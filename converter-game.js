@@ -30,28 +30,27 @@ let hintValue = 0;
 let hintSteps = [];
 
 function openHint() {
-  const base = targetSystem;
-  let value = decimalNumber;
-  let steps = [];
+  hintValue = decimalNumber;
+  hintSteps = [];
 
-  // Вычисляем шаги деления
-  while (value > 0) {
-    const quotient = Math.floor(value / base);
-    const remainder = value % base;
-    steps.push({ dividend: value, quotient, remainder });
-    value = quotient;
-  }
-
-  // Строим HTML для визуализации
-  let visual = `<pre><strong>${decimalNumber} | ${base}</strong>\n`;
-  steps.forEach(step => {
-    visual += `  ${step.quotient.toString(base)}  остаток: ${step.remainder.toString(base)}\n`;
-  });
-  visual += `</pre>`;
-
-  document.getElementById("currentStepValue").innerHTML = visual;
   document.getElementById("hintModal").style.display = "block";
+  document.getElementById("hintFeedback").textContent = "";
+  updateHintDisplay();
 }
+function updateHintDisplay() {
+  const base = targetSystem;
+
+  let html = `<pre><strong>${hintValue} | ${base}</strong></pre>`;
+  html += `
+    <p>Введите <strong>частное</strong> и <strong>остаток</strong>:</p>
+    <input type="text" id="quotientInput" placeholder="Частное">
+    <input type="text" id="remainderInput" placeholder="Остаток">
+    <br>
+    <button onclick="submitHintStep()">Далее</button>
+  `;
+  document.getElementById("currentStepValue").innerHTML = html;
+}
+
 
 
 
@@ -59,39 +58,35 @@ function closeHint() {
   document.getElementById("hintModal").style.display = "none";
 }
 function submitHintStep() {
-  const q = parseInt(document.getElementById("quotientInput").value);
-  const r = document.getElementById("remainderInput").value.trim().toLowerCase();
-
   const base = targetSystem;
-  const expectedR = hintValue % base;
-  const expectedQ = Math.floor(hintValue / base);
+  const q = parseInt(document.getElementById("quotientInput").value);
+  const rInput = document.getElementById("remainderInput").value.trim().toLowerCase();
 
-  // Ожидаемый остаток как символ
+  const expectedQ = Math.floor(hintValue / base);
+  const expectedR = hintValue % base;
   const expectedRStr = expectedR.toString(base);
 
-  if (r === expectedRStr && q === expectedQ) {
+  if (q === expectedQ && rInput === expectedRStr) {
     hintSteps.push(expectedRStr);
     hintValue = q;
-    document.getElementById("hintFeedback").textContent = "✅ Верно!";
+
     if (hintValue === 0) {
-      const correctAnswer = hintSteps.reverse().join("");
-      setTimeout(() => {
-        const userFinal = prompt(`Введите полученное число в системе счисления ${base}:\n(${hintSteps.reverse().join(" ")})`);
-        if (userFinal === correctAnswer) {
-          alert("✅ Молодец! Это правильный ответ.");
-        } else {
-          alert(`❌ Неверно. Правильный ответ: ${correctAnswer}`);
-        }
-        closeHint();
-      }, 500);
+      const correctAnswer = [...hintSteps].reverse().join("");
+      const userFinal = prompt(`Введите итоговое число снизу вверх (остатки):\n${hintSteps.reverse().join(" ")}`);
+      if (userFinal === correctAnswer) {
+        alert("✅ Молодец! Всё правильно!");
+      } else {
+        alert(`❌ Почти! Правильный ответ: ${correctAnswer}`);
+      }
+      closeHint();
     } else {
-      document.getElementById("quotientInput").value = "";
-      document.getElementById("remainderInput").value = "";
-      document.getElementById("currentStepValue").textContent = hintValue;
+      document.getElementById("hintFeedback").textContent = "✅ Верно!";
+      updateHintDisplay();
     }
   } else {
-    document.getElementById("hintFeedback").textContent = "❌ Неправильно. Попробуйте ещё раз.";
+    document.getElementById("hintFeedback").textContent = "❌ Неверно. Попробуйте снова.";
   }
 }
+
 
 startGame();
