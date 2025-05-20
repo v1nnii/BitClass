@@ -30,18 +30,29 @@ let hintValue = 0;
 let hintSteps = [];
 
 function openHint() {
-  hintValue = decimalNumber;
-  hintSteps = [];
-  document.getElementById("currentStepValue").textContent = hintValue;
-  document.getElementById("quotientInput").value = "";
-  document.getElementById("remainderInput").value = "";
-  document.getElementById("hintFeedback").textContent = "";
-  document.getElementById("hintModal").style.display = "block";
+  const base = targetSystem;
+  let value = decimalNumber;
+  let steps = [];
 
-  const baseText = targetSystem === 2 ? "2 (двоичную)" : "16 (шестнадцатеричную)";
-  document.querySelector(".modal-content p:nth-of-type(2)").innerHTML =
-    `Введите <strong>частное</strong> и <strong>остаток</strong> от деления на ${baseText}:`;
+  // Вычисляем шаги деления
+  while (value > 0) {
+    const quotient = Math.floor(value / base);
+    const remainder = value % base;
+    steps.push({ dividend: value, quotient, remainder });
+    value = quotient;
+  }
+
+  // Строим HTML для визуализации
+  let visual = `<pre><strong>${decimalNumber} | ${base}</strong>\n`;
+  steps.forEach(step => {
+    visual += `  ${step.quotient.toString(base)}  остаток: ${step.remainder.toString(base)}\n`;
+  });
+  visual += `</pre>`;
+
+  document.getElementById("currentStepValue").innerHTML = visual;
+  document.getElementById("hintModal").style.display = "block";
 }
+
 
 
 function closeHint() {

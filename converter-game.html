@@ -95,14 +95,9 @@
   <div class="modal" id="hintModal">
     <div class="modal-content">
       <h3>Пошаговая подсказка</h3>
-      <p>Текущее число: <span id="currentStepValue"></span></p>
-      <p>Введите <strong>частное</strong> и <strong>остаток</strong> от деления на 2:</p>
-      <input type="text" id="quotientInput" placeholder="Частное">
-      <input type="text" id="remainderInput" placeholder="Остаток">
+      <div id="currentStepValue" style="text-align: left; white-space: pre-wrap; font-family: monospace;"></div>
       <br>
-      <button onclick="submitHintStep()">Далее</button>
       <button onclick="closeHint()">Закрыть</button>
-      <p id="hintFeedback" class="feedback"></p>
     </div>
   </div>
 
