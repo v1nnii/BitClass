@@ -1,5 +1,6 @@
-let decimalNumber, targetSystem, score = 0, timeLeft = 30, timer;
+let decimalNumber, targetSystem, score = 0;
 const bases = [2, 16];
+
 function pad(num) {
   return num.toString().padStart(3, ' ');
 }
@@ -12,7 +13,6 @@ function startGame() {
     targetSystem === 2 ? "двоичную (2)" : "шестнадцатеричную (16)";
   document.getElementById("userAnswer").value = "";
   document.getElementById("feedback").textContent = "";
-
 }
 
 function submitAnswer() {
@@ -44,7 +44,6 @@ function updateHintTable() {
   const base = targetSystem;
   let html = `<pre><strong>${decimalNumber} | ${base}</strong>\n`;
 
-  // Отображаем уже выполненные шаги
   let currentValue = decimalNumber;
   for (let i = 0; i < hintSteps.length; i++) {
     const q = Math.floor(currentValue / base);
@@ -53,7 +52,6 @@ function updateHintTable() {
     currentValue = q;
   }
 
-  // Текущий шаг — пользовательский ввод
   if (currentValue > 0) {
     html += `\n<strong>${pad(currentValue)} | ${base}</strong>\n`;
     html += `
@@ -64,29 +62,20 @@ function updateHintTable() {
       </div>
     `;
   } else {
-    // Все шаги завершены, просим ввести итоговый ответ
     const reversed = [...hintSteps].reverse();
-    const correctAnswer = reversed.join("");
-    const userFinal = prompt(`Введите результат (снизу вверх):\n${reversed.join(" ")}`);
-    if (userFinal === correctAnswer) {
-      alert("✅ Молодец! Всё правильно!");
-    } else {
-      alert(`❌ Почти! Правильный ответ: ${correctAnswer}`);
-    }
-    closeHint();
-    return;
+    html += `
+      <p><strong>Шаги завершены!</strong></p>
+      <p>Введите полученное число снизу вверх:</p>
+      <input type="text" id="finalAnswerInput" placeholder="Ваш ответ" style="width: 150px;">
+      <button onclick="submitFinalAnswer()">Проверить</button>
+      <div id="finalFeedback"></div>
+    `;
   }
 
   html += `</pre>`;
   document.getElementById("currentStepValue").innerHTML = html;
 }
 
-
-
-
-function closeHint() {
-  document.getElementById("hintModal").style.display = "none";
-}
 function submitHintStep() {
   const base = targetSystem;
   const qInput = parseInt(document.getElementById("quotientInput").value.trim());
@@ -106,6 +95,22 @@ function submitHintStep() {
   }
 }
 
+function submitFinalAnswer() {
+  const userAnswer = document.getElementById("finalAnswerInput").value.trim().toLowerCase();
+  const correctAnswer = [...hintSteps].reverse().join("");
 
+  if (userAnswer === correctAnswer) {
+    document.getElementById("finalFeedback").innerHTML = "✅ Правильно!";
+    document.getElementById("userAnswer").value = userAnswer;
+    closeHint();
+    submitAnswer();
+  } else {
+    document.getElementById("finalFeedback").innerHTML = `❌ Неверно. Попробуйте ещё раз.`;
+  }
+}
+
+function closeHint() {
+  document.getElementById("hintModal").style.display = "none";
+}
 
 startGame();
