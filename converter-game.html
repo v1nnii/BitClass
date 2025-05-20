@@ -4,28 +4,52 @@
   <meta charset="UTF-8">
   <title>Игра: Переводчик систем счисления</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
+      margin: 0;
       font-family: sans-serif;
       background-color: #ffffff;
-      margin: 0;
+    }
+    .page-container {
+      width: 100vw;
+      height: 100vh;
       padding: 20px;
     }
-
-    .game-container {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 30px;
-      background-color: #f4f4f4;
+    .logo {
+      width: 78px;
+      height: 78px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    .orange-container {
+      width: 100%;
+      max-width: 1200px;
+      min-height: 600px;
+      background-color: #C74827;
       border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin: 60px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .white-container {
+      width: 100%;
+      max-width: 1125px;
+      min-height: 519px;
+      background-color: #FFFFFF;
+      border-radius: 15px;
+      position: relative;
+      padding: 20px;
       text-align: center;
     }
-
-    .game-container h2 {
+    h2 {
       color: #c7432b;
       margin-bottom: 20px;
     }
-
     input[type="text"] {
       padding: 10px;
       font-size: 16px;
@@ -34,7 +58,6 @@
       border: 2px solid #ccc;
       border-radius: 8px;
     }
-
     button {
       padding: 10px 20px;
       font-size: 16px;
@@ -45,16 +68,13 @@
       cursor: pointer;
       margin: 5px;
     }
-
     button:hover {
       background-color: #a63423;
     }
-
     .feedback {
       margin-top: 15px;
       font-weight: bold;
     }
-
     .modal {
       display: none;
       position: fixed;
@@ -63,7 +83,6 @@
       width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.5);
     }
-
     .modal-content {
       background: white;
       padding: 30px;
@@ -76,19 +95,24 @@
   </style>
 </head>
 <body>
-  <div class="game-container">
-    <h2>🎮 Игра: Переводчик систем счисления</h2>
-    <p><strong>Число:</strong> <span id="decimalNumber">–</span></p>
-    <p><strong>Переведи в:</strong> <span id="targetSystem">–</span></p>
+  <img src="/assets/image/book-icon2.png" alt="Логотип" class="logo" id="logo" style="cursor:pointer;" />
 
-    <input type="text" id="userAnswer" placeholder="Введите ваш ответ...">
-    <br>
-    <button onclick="submitAnswer()">Отправить</button>
-    <button onclick="openHint()">Подсказка</button>
+  <div class="page-container">
+    <div class="orange-container">
+      <div class="white-container">
+        <h2>🎮 Игра: Переводчик систем счисления</h2>
+        <p><strong>Число:</strong> <span id="decimalNumber">–</span></p>
+        <p><strong>Переведи в:</strong> <span id="targetSystem">–</span></p>
 
-    <p>✅ Правильные ответы: <span id="score">0</span></p>
+        <input type="text" id="userAnswer" placeholder="Введите ваш ответ...">
+        <br>
+        <button onclick="submitAnswer()">Проверить</button>
+        <button onclick="openHint()">Подсказка</button>
 
-    <p id="feedback" class="feedback"></p>
+        <p>✅ Правильные ответы: <span id="score">0</span></p>
+        <p id="feedback" class="feedback"></p>
+      </div>
+    </div>
   </div>
 
   <!-- Модальное окно-подсказка -->
@@ -99,9 +123,6 @@
       <p id="hintFeedback" class="feedback"></p>
       <button onclick="closeHint()">Закрыть</button>
     </div>
-
-</div>
-
   </div>
 
   <script src="converter-game.js"></script>
