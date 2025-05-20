@@ -473,66 +473,62 @@ body {
 
 
 .content-section {
-  padding: 20px;
-  font-family: 'Segoe UI', sans-serif;
+  padding: 40px 20px;
 }
 
 .section-title {
   font-size: 28px;
-  margin-bottom: 20px;
-}
-
-.game-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
 
 .game-card {
-  background: #f3f3f3;
-  border-radius: 16px;
+  background-color: #fff;
+  border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  margin-bottom: 30px;
+  max-width: 700px;
 }
 
 .game-image {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.game-info {
+.game-text {
   padding: 20px;
-  flex: 1;
 }
 
-.game-title {
+.game-text h3 {
   font-size: 20px;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-weight: 700;
   margin: 0 0 10px;
+  text-transform: uppercase;
 }
 
-.game-description {
+.game-text p {
   font-size: 14px;
-  color: #333;
-  margin: 0 0 15px;
+  color: #555;
+  margin: 0;
 }
 
 .play-button {
-  display: inline-block;
+  align-self: flex-end;
+  margin: 0 20px 20px auto;
   background-color: #d3542c;
   color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  text-decoration: none;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
   font-weight: bold;
+  text-decoration: none;
   transition: background-color 0.3s;
 }
 
 .play-button:hover {
-  background-color: #c43e1d;
+  background-color: #ba4521;
 }
-
