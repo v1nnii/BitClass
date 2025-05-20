@@ -474,11 +474,6 @@ body {
 
 
 
-.section-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
 
 .game-card {
   background-color: #fff;
@@ -488,7 +483,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  max-width: 700px;
+  max-width: 900px;
 }
 
 .game-image {
