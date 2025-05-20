@@ -112,5 +112,7 @@ function submitFinalAnswer() {
 function closeHint() {
   document.getElementById("hintModal").style.display = "none";
 }
-
+document.getElementById("logo").addEventListener("click", () => {
+  window.location.href = "main.html";
+});
 startGame();
