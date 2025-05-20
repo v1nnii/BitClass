@@ -1,5 +1,8 @@
 let decimalNumber, targetSystem, score = 0, timeLeft = 30, timer;
 const bases = [2, 16];
+function pad(num) {
+  return num.toString().padStart(3, ' ');
+}
 
 function startGame() {
   decimalNumber = Math.floor(Math.random() * 256);
@@ -32,22 +35,49 @@ let hintSteps = [];
 function openHint() {
   hintValue = decimalNumber;
   hintSteps = [];
-
-  document.getElementById("hintModal").style.display = "block";
   document.getElementById("hintFeedback").textContent = "";
-  updateHintDisplay();
+  document.getElementById("hintModal").style.display = "block";
+  updateHintTable();
 }
-function updateHintDisplay() {
-  const base = targetSystem;
 
-  let html = `<pre><strong>${hintValue} | ${base}</strong></pre>`;
-  html += `
-    <p>Введите <strong>частное</strong> и <strong>остаток</strong>:</p>
-    <input type="text" id="quotientInput" placeholder="Частное">
-    <input type="text" id="remainderInput" placeholder="Остаток">
-    <br>
-    <button onclick="submitHintStep()">Далее</button>
-  `;
+function updateHintTable() {
+  const base = targetSystem;
+  let html = `<pre><strong>${decimalNumber} | ${base}</strong>\n`;
+
+  // Отображаем уже выполненные шаги
+  let currentValue = decimalNumber;
+  for (let i = 0; i < hintSteps.length; i++) {
+    const q = Math.floor(currentValue / base);
+    const r = currentValue % base;
+    html += `${pad(q)}   остаток: ${r.toString(base)}\n`;
+    currentValue = q;
+  }
+
+  // Текущий шаг — пользовательский ввод
+  if (currentValue > 0) {
+    html += `\n<strong>${pad(currentValue)} | ${base}</strong>\n`;
+    html += `
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="quotientInput" placeholder="Частное" style="width: 80px;">
+        <input type="text" id="remainderInput" placeholder="Остаток" style="width: 80px;">
+        <button onclick="submitHintStep()">Далее</button>
+      </div>
+    `;
+  } else {
+    // Все шаги завершены, просим ввести итоговый ответ
+    const reversed = [...hintSteps].reverse();
+    const correctAnswer = reversed.join("");
+    const userFinal = prompt(`Введите результат (снизу вверх):\n${reversed.join(" ")}`);
+    if (userFinal === correctAnswer) {
+      alert("✅ Молодец! Всё правильно!");
+    } else {
+      alert(`❌ Почти! Правильный ответ: ${correctAnswer}`);
+    }
+    closeHint();
+    return;
+  }
+
+  html += `</pre>`;
   document.getElementById("currentStepValue").innerHTML = html;
 }
 
@@ -59,34 +89,23 @@ function closeHint() {
 }
 function submitHintStep() {
   const base = targetSystem;
-  const q = parseInt(document.getElementById("quotientInput").value);
+  const qInput = parseInt(document.getElementById("quotientInput").value.trim());
   const rInput = document.getElementById("remainderInput").value.trim().toLowerCase();
 
-  const expectedQ = Math.floor(hintValue / base);
-  const expectedR = hintValue % base;
+  const current = hintSteps.reduce((val, step) => Math.floor(val / base), decimalNumber);
+  const expectedQ = Math.floor(current / base);
+  const expectedR = current % base;
   const expectedRStr = expectedR.toString(base);
 
-  if (q === expectedQ && rInput === expectedRStr) {
+  if (qInput === expectedQ && rInput === expectedRStr) {
     hintSteps.push(expectedRStr);
-    hintValue = q;
-
-    if (hintValue === 0) {
-      const correctAnswer = [...hintSteps].reverse().join("");
-      const userFinal = prompt(`Введите итоговое число снизу вверх (остатки):\n${hintSteps.reverse().join(" ")}`);
-      if (userFinal === correctAnswer) {
-        alert("✅ Молодец! Всё правильно!");
-      } else {
-        alert(`❌ Почти! Правильный ответ: ${correctAnswer}`);
-      }
-      closeHint();
-    } else {
-      document.getElementById("hintFeedback").textContent = "✅ Верно!";
-      updateHintDisplay();
-    }
+    document.getElementById("hintFeedback").textContent = "✅ Верно!";
+    updateHintTable();
   } else {
     document.getElementById("hintFeedback").textContent = "❌ Неверно. Попробуйте снова.";
   }
 }
+
 
 
 startGame();
