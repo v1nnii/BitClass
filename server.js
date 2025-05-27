@@ -348,7 +348,7 @@ app.get("/api/questions/:slug", async (req, res) => {
                     id: questionId,
                     text: row.question_text,
                     order: row.order_num,
-                    topic_id: row.topic_id, // 👈 добавлено
+                    topic_id: row.topic_id, 
                     answers: []
                 });
             }
@@ -401,15 +401,15 @@ app.post("/api/progress/question", async (req, res) => {
             `, [newScore, userId, topicId]);
         }
 
-        // -------- ВОТ ЭТО добавь, чтобы еще сохранить ежедневный прогресс! --------
-        const today = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
+
+        const today = new Date().toISOString().slice(0, 10); 
         await pool.query(`
             INSERT INTO user_daily_score (user_id, class_id, section_id, topic_id, date, daily_score)
             VALUES ($1, NULL, NULL, $2, $3, $4)
             ON CONFLICT (user_id, topic_id, date)
             DO UPDATE SET daily_score = user_daily_score.daily_score + $4
         `, [userId, topicId, today, score]);
-        // -------------------------------------------------------------------------
+
 
         res.status(200).json({ message: "Прогресс обновлён" });
     } catch (err) {
@@ -606,7 +606,7 @@ app.post("/api/typing-race/save", async (req, res) => {
 
     try {
         const decoded = jwt.verify(token, SECRET_KEY);
-        userId = parseInt(decoded.usersId, 10); // Приведение к числу
+        userId = parseInt(decoded.usersId, 10); 
     } catch (err) {
         return res.status(401).json({ message: "Неверный токен." });
     }

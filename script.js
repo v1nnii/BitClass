@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
               token: result.token,
               usersId: result.usersId
             }));
-            localStorage.setItem("token", result.token); // если где-то ещё используется отдельно
+            localStorage.setItem("token", result.token); 
           }
           
           window.location.href = "main.html";
