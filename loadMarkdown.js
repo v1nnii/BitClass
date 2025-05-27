@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Загрузка текущего дневного прогресса
   if (token && userId) {
     dailyScore = await getDailyProgressFromServer();
-    totalScore = dailyScore; // можно заменить на общее, если оно есть отдельно
+    totalScore = dailyScore;
     updateProgressWidget(totalScore, dailyScore);
   }
 

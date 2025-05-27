@@ -1,8 +1,8 @@
 // Загрузка данных пользователя
 async function fetchUserData() {
     const token = localStorage.getItem('token');
-    const userProfileSidebar = document.querySelector('.user-profile'); // Профиль в сайт-баре
-    const userProfileExchange = document.querySelector('.exchange-user-profile'); // Профиль на странице "Обмен"
+    const userProfileSidebar = document.querySelector('.user-profile'); 
+    const userProfileExchange = document.querySelector('.exchange-user-profile'); 
     const notificationElement = document.querySelector('.notification');
 
     function displayNotification(message, type = 'error') {
@@ -47,5 +47,5 @@ async function fetchUserData() {
     }
 }
 
-// Вызов функции загрузки данных пользователя
+
 fetchUserData();

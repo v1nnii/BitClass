@@ -73,7 +73,7 @@ async function loadTotalProgress() {
             const data = await response.json();
             console.log("Общий прогресс получен:", data);
 
-            const dailyScore = await getDailyProgress();  // <-- добавлено "await"
+            const dailyScore = await getDailyProgress(); 
             updateProgressWidget(data.total_score, dailyScore);
         } else {
             console.error("Ошибка при получении общего прогресса:", response.status);
@@ -138,5 +138,5 @@ async function loadTotalProgress() {
     const initialHash = window.location.hash.replace('#', '') || 'home';
     showSection(initialHash);
 
-    loadTotalProgress(); // Загрузка общего и дневного прогресса
+    loadTotalProgress(); 
 });

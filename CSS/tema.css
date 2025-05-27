@@ -184,7 +184,7 @@ body {
 
 /* Старый блок кнопок (центр) */
 .result-buttons {
-  display: none; /* скрыт, если не нужен */
+  display: none;
 }
 
 /* Новый блок кнопок по углам */
@@ -195,7 +195,7 @@ body {
   margin-top: 50px;
 }
 
-/* Кнопка "Пройти снова" (слева) */
+/* Кнопка "Пройти снова"  */
 .restart-button {
   position: absolute;
   left: 0;
@@ -217,7 +217,7 @@ body {
   transform: scale(1.02);
 }
 
-/* Кнопка "На главную" (справа) */
+/* Кнопка "На главную"  */
 .finish-button {
   position: absolute;
   right: 0;
