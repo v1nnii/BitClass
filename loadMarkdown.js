@@ -131,13 +131,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function showQuestion() {
-    if (currentQuestionIndex >= questions.length) return showResult();
+  if (currentQuestionIndex >= questions.length) return showResult();
 
-    const question = questions[currentQuestionIndex];
-    questionText.textContent = `Вопрос ${currentQuestionIndex + 1}: ${question.text}`;
-    answersContainer.innerHTML = "";
-    nextBtn.style.display = "none";
+  const question = questions[currentQuestionIndex];
+  questionText.textContent = `Вопрос ${currentQuestionIndex + 1}: ${question.text}`;
+  answersContainer.innerHTML = "";
+  nextBtn.style.display = "none";
 
+  if (question.type === "choice") {
+    // Варианты с кнопками
     question.answers.forEach(answer => {
       const btn = document.createElement("button");
       btn.textContent = answer.text;
@@ -145,7 +147,63 @@ document.addEventListener("DOMContentLoaded", async () => {
       btn.addEventListener("click", () => handleAnswerClick(btn, answer));
       answersContainer.appendChild(btn);
     });
+  } else if (question.type === "text") {
+    // Ввод с клавиатуры
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Введите ответ";
+    input.className = "answer-input";
+    answersContainer.appendChild(input);
+
+    const submitBtn = document.createElement("button");
+    submitBtn.textContent = "Ответить";
+    submitBtn.className = "submit-answer-button";
+    answersContainer.appendChild(submitBtn);
+
+    submitBtn.addEventListener("click", () => {
+      const userAnswer = input.value.trim();
+      if (!userAnswer) {
+        alert("Пожалуйста, введите ответ");
+        return;
+      }
+      handleTextAnswer(userAnswer, input, submitBtn);
+    });
+  } else {
+    // Если тип неизвестен, просто пропустить вопрос
+    nextBtn.style.display = "inline-block";
   }
+}
+
+function handleTextAnswer(userAnswer, inputElem, submitBtn) {
+  const question = questions[currentQuestionIndex];
+  const correctAnswer = question.answers.find(a => a.is_correct)?.text.trim().toLowerCase();
+
+  const isCorrect = correctAnswer === userAnswer.toLowerCase();
+
+  if (isCorrect) {
+    inputElem.classList.add("correct");
+    score += 10;
+
+    if (token && userId) {
+      updateDailyProgressOnServer(10).then(updated => {
+        dailyScore = updated;
+        totalScore += 10;
+        updateProgressWidget(totalScore, dailyScore);
+      });
+    }
+  } else {
+    inputElem.classList.add("wrong");
+  }
+
+  inputElem.disabled = true;
+  submitBtn.disabled = true;
+
+  markProgress(currentQuestionIndex + 1);
+  // Сохраняем прогресс, передаём объект с полем text — введённый ответ
+  saveAnswerProgress({ text: userAnswer }, isCorrect);
+  nextBtn.style.display = "inline-block";
+}
+
 
   function handleAnswerClick(button, answer) {
     const isCorrect = answer.is_correct;

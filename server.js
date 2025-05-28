@@ -314,7 +314,6 @@ app.post("/api/parse-doc", upload.single("file"), async (req, res) => {
       res.status(500).json({ error: "Ошибка сервера" });
     }
   });
-
 app.get("/api/questions/:slug", async (req, res) => {
     const { slug } = req.params;
 
@@ -325,6 +324,7 @@ app.get("/api/questions/:slug", async (req, res) => {
                 q.text AS question_text,
                 q.order_num,
                 q.topic_id,
+                q.type AS question_type,  -- 👈 добавляем тип вопроса
                 a.id AS answer_id,
                 a.text AS answer_text,
                 a.is_correct
@@ -348,7 +348,8 @@ app.get("/api/questions/:slug", async (req, res) => {
                     id: questionId,
                     text: row.question_text,
                     order: row.order_num,
-                    topic_id: row.topic_id, 
+                    topic_id: row.topic_id,
+                    type: row.question_type,  // 👈 добавляем сюда
                     answers: []
                 });
             }
@@ -366,6 +367,7 @@ app.get("/api/questions/:slug", async (req, res) => {
         res.status(500).json({ error: "Ошибка сервера при получении вопросов" });
     }
 });
+
 
 
 
