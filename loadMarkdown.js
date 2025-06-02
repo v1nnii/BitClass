@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const submitBtn = document.createElement("button");
   submitBtn.textContent = "Ответить";
-  submitBtn.className = "next-button";
+  submitBtn.className = "submit-answer-button";
   answersContainer.appendChild(submitBtn);
 
   const nextInlineBtn = document.createElement("button");
