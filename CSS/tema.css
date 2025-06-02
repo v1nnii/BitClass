@@ -238,6 +238,51 @@ body {
   background-color: #C74827;
   transform: scale(1.02);
 }
+/* Поле для текстового ответа */
+.answer-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 2px solid #C74827;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.answer-input:focus {
+  border-color: #C74827;
+  box-shadow: 0 0 0 2px rgba(199, 72, 39, 0.2);
+}
+
+/* Цвета при проверке */
+.answer-input.correct {
+  border-color: #4caf50;
+  background-color: #e8f5e9;
+}
+
+.answer-input.wrong {
+  border-color: #f44336;
+  background-color: #ffebee;
+}
+
+/* Кнопка "Ответить" */
+.submit-answer-button {
+  padding: 12px 24px;
+  font-size: 1em;
+  border-radius: 8px;
+  background-color: #69D473;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-answer-button:hover {
+  background-color: #57bd63;
+  transform: scale(1.02);
+}
 
 /* Адаптивность: мобильные устройства */
 @media (max-width: 768px) {
@@ -275,3 +320,4 @@ body {
     display: block;
   }
 }
+
