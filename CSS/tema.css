@@ -267,24 +267,22 @@ body {
   background-color: #ffebee;
 }
 
-/* Вариант кнопки "Следующий вопрос" (в текстовых вопросах) */
-.next-inline-button {
+/* Кнопка "Ответить" */
+.submit-answer-button {
   padding: 12px 24px;
   font-size: 1em;
   border-radius: 8px;
-  background-color: #f57c00;
+  background-color: #69D473;
   border: none;
   color: white;
   cursor: pointer;
-  margin-left: 20px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.next-inline-button:hover {
-  background-color: #e64a19;
+.submit-answer-button:hover {
+  background-color: #57bd63;
   transform: scale(1.02);
 }
-
 
 /* Адаптивность: мобильные устройства */
 @media (max-width: 768px) {

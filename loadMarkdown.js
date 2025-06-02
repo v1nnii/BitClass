@@ -156,12 +156,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const submitBtn = document.createElement("button");
   submitBtn.textContent = "Ответить";
-  submitBtn.className = "submit-answer-button";
+  submitBtn.className = "next-button";
   answersContainer.appendChild(submitBtn);
 
   const nextInlineBtn = document.createElement("button");
   nextInlineBtn.textContent = "Следующий вопрос";
-  nextInlineBtn.className = "submit-answer-button"; // Тот же стиль
+  nextInlineBtn.className = "submit-answer-button"; 
   nextInlineBtn.style.display = "none";
   answersContainer.appendChild(nextInlineBtn);
 
