@@ -147,34 +147,44 @@ document.addEventListener("DOMContentLoaded", async () => {
       btn.addEventListener("click", () => handleAnswerClick(btn, answer));
       answersContainer.appendChild(btn);
     });
-  } else if (question.type === "text") {
-    // Ввод с клавиатуры
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "Введите ответ";
-    input.className = "answer-input";
-    answersContainer.appendChild(input);
+} else if (question.type === "text") {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Введите ответ";
+  input.className = "answer-input";
+  answersContainer.appendChild(input);
 
-    const submitBtn = document.createElement("button");
-    submitBtn.textContent = "Ответить";
-    submitBtn.className = "submit-answer-button";
-    answersContainer.appendChild(submitBtn);
+  const submitBtn = document.createElement("button");
+  submitBtn.textContent = "Ответить";
+  submitBtn.className = "submit-answer-button";
+  answersContainer.appendChild(submitBtn);
 
-    submitBtn.addEventListener("click", () => {
-      const userAnswer = input.value.trim();
-      if (!userAnswer) {
-        alert("Пожалуйста, введите ответ");
-        return;
-      }
-      handleTextAnswer(userAnswer, input, submitBtn);
-    });
-  } else {
+  const nextInlineBtn = document.createElement("button");
+  nextInlineBtn.textContent = "Следующий вопрос";
+  nextInlineBtn.className = "submit-answer-button"; // Тот же стиль
+  nextInlineBtn.style.display = "none";
+  answersContainer.appendChild(nextInlineBtn);
+
+  submitBtn.addEventListener("click", () => {
+    const userAnswer = input.value.trim();
+    if (!userAnswer) {
+      alert("Пожалуйста, введите ответ");
+      return;
+    }
+    handleTextAnswer(userAnswer, input, submitBtn, nextInlineBtn);
+  });
+
+  nextInlineBtn.addEventListener("click", () => {
+    currentQuestionIndex++;
+    showQuestion();
+  });
+}else {
     // Если тип неизвестен, просто пропустить вопрос
     nextBtn.style.display = "inline-block";
   }
 }
 
-function handleTextAnswer(userAnswer, inputElem, submitBtn) {
+function handleTextAnswer(userAnswer, inputElem, submitBtn, nextInlineBtn) {
   const question = questions[currentQuestionIndex];
   const correctAnswer = question.answers.find(a => a.is_correct)?.text.trim().toLowerCase();
 
@@ -199,10 +209,14 @@ function handleTextAnswer(userAnswer, inputElem, submitBtn) {
   submitBtn.disabled = true;
 
   markProgress(currentQuestionIndex + 1);
-  // Сохраняем прогресс, передаём объект с полем text — введённый ответ
   saveAnswerProgress({ text: userAnswer }, isCorrect);
-  nextBtn.style.display = "inline-block";
+
+  // Показываем встроенную кнопку "Следующий вопрос"
+  nextInlineBtn.style.display = "inline-block";
+  // Прячем глобальную кнопку на всякий случай
+  nextBtn.style.display = "none";
 }
+
 
 
   function handleAnswerClick(button, answer) {
