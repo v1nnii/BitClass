@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const input = document.createElement("input");
   input.type = "text";
   input.placeholder = "Введите ответ";
-  input.className = "answer-input long-center";
+  input.className = "answer-input";
 
   const actionBtn = document.createElement("button");
   actionBtn.textContent = "Ответить";

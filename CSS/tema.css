@@ -239,6 +239,17 @@ body {
   transform: scale(1.02);
 }
 
+.answer-input {
+  width: 100%;
+  max-width: 1066px;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 2px solid #C74827;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
 
 .answer-input:focus {
   border-color: #C74827;
@@ -310,16 +321,7 @@ body {
   }
 }
 
-.answer-input.long-center {
-  width: 100%;
-  max-width: 1066px;
-  padding: 16px 20px;
-  font-size: 18px;
-  margin: 0 auto 30px auto;
-  display: block;
-  border: 3px solid #C74827;
-  border-radius: 10px;
-}
+
 
 /* Кнопка "Ответить"/"Следующий вопрос" внизу слева */
 .submit-answer-button.bottom-left {
