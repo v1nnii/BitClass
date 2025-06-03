@@ -323,7 +323,7 @@ body {
 /* Удлиненное текстовое поле по центру */
 .answer-input.long-center {
   width: 100%;
-  max-width: 700px;
+  max-width: 1066px;
   padding: 16px 20px;
   font-size: 18px;
   margin: 0 auto 30px auto;
@@ -335,7 +335,7 @@ body {
 /* Кнопка "Ответить"/"Следующий вопрос" внизу слева */
 .submit-answer-button.bottom-left {
   position: absolute;
-  left: 20px;
+  right: 20px;
   bottom: 20px;
   padding: 12px 24px;
   font-size: 1em;
