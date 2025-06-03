@@ -148,39 +148,44 @@ document.addEventListener("DOMContentLoaded", async () => {
       answersContainer.appendChild(btn);
     });
 } else if (question.type === "text") {
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.flexDirection = "column";
+  wrapper.style.alignItems = "center";
+  wrapper.style.width = "100%";
+
   const input = document.createElement("input");
   input.type = "text";
   input.placeholder = "Введите ответ";
-  input.className = "answer-input";
-  answersContainer.appendChild(input);
+  input.className = "answer-input long-center";
 
-const actionBtn = document.createElement("button");
-actionBtn.textContent = "Ответить";
-actionBtn.className = "submit-answer-button";
-answersContainer.appendChild(actionBtn);
+  const actionBtn = document.createElement("button");
+  actionBtn.textContent = "Ответить";
+  actionBtn.className = "submit-answer-button bottom-left";
 
-let hasAnswered = false;
+  wrapper.appendChild(input);
+  answersContainer.appendChild(wrapper);
+  answersContainer.appendChild(actionBtn);
 
-actionBtn.addEventListener("click", () => {
-  if (!hasAnswered) {
-    const userAnswer = input.value.trim();
-    if (!userAnswer) {
-      alert("Пожалуйста, введите ответ");
-      return;
+  let hasAnswered = false;
+
+  actionBtn.addEventListener("click", () => {
+    if (!hasAnswered) {
+      const userAnswer = input.value.trim();
+      if (!userAnswer) {
+        alert("Пожалуйста, введите ответ");
+        return;
+      }
+
+      const isCorrect = handleTextAnswer(userAnswer, input);
+      hasAnswered = true;
+
+      actionBtn.textContent = "Следующий вопрос";
+    } else {
+      currentQuestionIndex++;
+      showQuestion();
     }
-
-    const isCorrect = handleTextAnswer(userAnswer, input);
-    hasAnswered = true;
-
-    // Меняем кнопку на "Следующий вопрос"
-    actionBtn.textContent = "Следующий вопрос";
-  } else {
-    // Переход к следующему вопросу
-    currentQuestionIndex++;
-    showQuestion();
-  }
-});
-
+  });
 }else {
     // Если тип неизвестен, просто пропустить вопрос
     nextBtn.style.display = "inline-block";
