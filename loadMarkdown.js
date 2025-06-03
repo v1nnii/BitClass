@@ -154,37 +154,40 @@ document.addEventListener("DOMContentLoaded", async () => {
   input.className = "answer-input";
   answersContainer.appendChild(input);
 
-  const submitBtn = document.createElement("button");
-  submitBtn.textContent = "Ответить";
-  submitBtn.className = "submit-answer-button";
-  answersContainer.appendChild(submitBtn);
+const actionBtn = document.createElement("button");
+actionBtn.textContent = "Ответить";
+actionBtn.className = "submit-answer-button";
+answersContainer.appendChild(actionBtn);
 
-  const nextInlineBtn = document.createElement("button");
-  nextInlineBtn.textContent = "Следующий вопрос";
-  nextInlineBtn.className = "submit-answer-button"; 
-  nextInlineBtn.style.display = "none";
-  answersContainer.appendChild(nextInlineBtn);
+let hasAnswered = false;
 
-  submitBtn.addEventListener("click", () => {
+actionBtn.addEventListener("click", () => {
+  if (!hasAnswered) {
     const userAnswer = input.value.trim();
     if (!userAnswer) {
       alert("Пожалуйста, введите ответ");
       return;
     }
-    handleTextAnswer(userAnswer, input, submitBtn, nextInlineBtn);
-  });
 
-  nextInlineBtn.addEventListener("click", () => {
+    const isCorrect = handleTextAnswer(userAnswer, input);
+    hasAnswered = true;
+
+    // Меняем кнопку на "Следующий вопрос"
+    actionBtn.textContent = "Следующий вопрос";
+  } else {
+    // Переход к следующему вопросу
     currentQuestionIndex++;
     showQuestion();
-  });
+  }
+});
+
 }else {
     // Если тип неизвестен, просто пропустить вопрос
     nextBtn.style.display = "inline-block";
   }
 }
 
-function handleTextAnswer(userAnswer, inputElem, submitBtn, nextInlineBtn) {
+function handleTextAnswer(userAnswer, inputElem) {
   const question = questions[currentQuestionIndex];
   const correctAnswer = question.answers.find(a => a.is_correct)?.text.trim().toLowerCase();
 
@@ -206,16 +209,12 @@ function handleTextAnswer(userAnswer, inputElem, submitBtn, nextInlineBtn) {
   }
 
   inputElem.disabled = true;
-  submitBtn.disabled = true;
-
   markProgress(currentQuestionIndex + 1);
   saveAnswerProgress({ text: userAnswer }, isCorrect);
 
-  // Показываем встроенную кнопку "Следующий вопрос"
-  nextInlineBtn.style.display = "inline-block";
-  // Прячем глобальную кнопку на всякий случай
-  nextBtn.style.display = "none";
+  return isCorrect;
 }
+
 
 
 
